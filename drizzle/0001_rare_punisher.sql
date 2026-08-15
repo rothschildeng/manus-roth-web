@@ -1,0 +1,1 @@
+ALTER TABLE `paymentTransactions` ADD CONSTRAINT `paymentTransactions_chain_txHash_unique` UNIQUE(`chain`,`txHash`);

@@ -1,0 +1,2 @@
+ALTER TABLE `paymentOrders` MODIFY COLUMN `chain` enum('TON','USDT_BEP20','SOLANA','BTC','ETH','WALLET') NOT NULL;--> statement-breakpoint
+ALTER TABLE `paymentTransactions` MODIFY COLUMN `chain` enum('TON','USDT_BEP20','SOLANA','BTC','ETH','WALLET') NOT NULL;

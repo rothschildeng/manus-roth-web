@@ -1,0 +1,76 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1786727546757,
+      "tag": "0000_new_machine_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1786729307389,
+      "tag": "0001_rare_punisher",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1786730699446,
+      "tag": "0002_easy_mach_iv",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1786756906286,
+      "tag": "0003_chilly_mongu",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1786758116730,
+      "tag": "0004_youthful_daredevil",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1786758664727,
+      "tag": "0005_elite_dagger",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1786759222302,
+      "tag": "0006_condemned_wraith",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1786760055625,
+      "tag": "0007_smiling_slayback",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1786784482013,
+      "tag": "0008_huge_clint_barton",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1786785103875,
+      "tag": "0009_parched_ben_grimm",
+      "breakpoints": true
+    }
+  ]
+}

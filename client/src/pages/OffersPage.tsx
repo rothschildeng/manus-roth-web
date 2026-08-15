@@ -1,0 +1,7 @@
+import StoreShell from "@/components/StoreShell";
+import { Sparkles, ShieldCheck } from "lucide-react";
+import { Link } from "wouter";
+
+export default function OffersPage() {
+  return <StoreShell><section className="wallet-page"><span className="catalog-kicker">OFFERS / VERIFIED RELEASES</span><div className="wallet-heading"><div><h1>Value without<br /><em>false claims.</em></h1><p>Offers are shown only after the operator defines eligibility, funding, and review rules. No artificial festive bonus or discount is displayed in advance.</p></div><div className="referral-code-card"><Sparkles size={18} /><span>Offer desk</span><strong>WATCHING</strong><p>Approved offers will be announced here with their exact conditions.</p></div></div><div className="wallet-grid"><section className="wallet-panel"><div className="wallet-panel-head"><ShieldCheck size={19} /><div><span>DEPOSIT BONUSES</span><h2>No active bonus.</h2></div></div><p>Deposit requests can still be submitted from your wallet. Any future promotion will be manually reviewed and written to the same wallet ledger.</p><Link href="/wallet#deposit" className="button-primary">Open wallet <Sparkles size={16} /></Link></section><section className="wallet-panel"><div className="wallet-panel-head"><Sparkles size={19} /><div><span>FESTIVE OFFERS</span><h2>Awaiting release.</h2></div></div><p>Seasonal offers remain hidden until their terms, stock, and fulfilment conditions are confirmed. This prevents showing unavailable or misleading promotions.</p></section></div></section></StoreShell>;
+}

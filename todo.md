@@ -1,0 +1,189 @@
+# Roth Digital Premium Website — Task Checklist
+
+- [x] Treat all credentials pasted in chat as compromised; do not use or commit them.
+- [x] Inspect the provided GitHub repository and identify its app structure, run command, and primary entry points.
+- [x] Review the existing visual language, routes, components, and available assets.
+- [x] Write `ideas.md` with the selected premium 3D-inspired design direction and implementation rules.
+- [x] Keep payment, bot, and domain activation behind explicit user-controlled configuration and publishing steps.
+- [x] Implement the premium website improvements in the repository-informed managed storefront without discarding the product direction.
+- [x] Run the project and verify desktop and mobile layouts.
+- [x] Fix visible issues and save a stable checkpoint for delivery.
+- [x] Confirm the direct-monitoring route, supported network variants, public exchange-rate source, and secure wallet inputs.
+- [x] Validate the configured public wallet mappings for TON, USDT-BEP20, Solana, BTC, and ETH; do not reuse exposed bot or GitHub credentials.
+- [x] Treat the Trust Wallet address only as the USDT-BEP20 receiving address and validate the USDT token contract separately.
+- [x] Configure the backend/database foundation for transaction and approval records.
+- [x] Upgrade the project to a backend-capable setup without exposing payment secrets to the browser.
+- [x] Implement payment intents, transaction status tracking, required confirmations, and admin approval before delivery.
+- [x] Keep payment approval and any final fulfilment decision manual; do not add auto-delivery or bot approval.
+- [x] Keep Approve and Reject actions exclusive to the authenticated `/admin/payments` review panel; customers only see payment progress.
+- [x] After deployment, create the platform-managed scheduled payment scan; do not use in-process timers.
+- [x] Verify duplicate-payment, underpayment, wrong-network, expired-order, and reconciliation safeguards in the implemented direct-monitoring flow.
+- [x] Make transaction recording idempotent and prevent repeated refresh/scan runs from duplicating a transaction record.
+- [x] Make shared receiving-address payment matching unambiguous for concurrent orders.
+- [x] Calculate native ETH confirmations from block-height deltas and add multi-chain confirmation progression coverage.
+- [x] Extract the complete real product catalog, categories, images, prices, and availability rules from the provided Roth Digital/Replit repository.
+- [x] Locate and apply the repository’s text-based Roth Digital wordmark treatment consistently across storefront, checkout, and admin views.
+- [x] Replace demo merchandise in the premium storefront with the real repository catalog without fabricating customer reviews or product details.
+- [x] Add explicit reconciliation coverage for underpayment, wrong-network, expiry, and repeated-refresh behavior.
+- [x] Add explicit confirmation progression coverage for ETH, BTC, USDT-BEP20, TON, and Solana monitor adapters.
+- [x] Import and render available repository product/brand image assets and wire repository availability rules into catalog visibility.
+- [x] Apply the Roth Digital wordmark lockup consistently to the checkout modal and manual payment-review workspace.
+- [x] Save a final post-payment/post-catalog checkpoint after all verification passes.
+- [x] Strengthen the logo-led catalog presentation with real Amazon, Flipkart, Apple, subscription, gaming, and marketplace brand visuals from the repository.
+- [x] Refine visual hierarchy and interactions without changing any repository product data or displayed prices.
+- [x] Run a dependency audit and review dependency vulnerability findings.
+- [x] Scan tracked source/configuration for credential exposure and unsafe secret handling.
+- [x] Review payment, scheduled-scan, and admin access-control paths for material security issues.
+- [x] Document findings, remediate material issues, and re-verify the build and tests.
+- [x] Define routes and navigation for homepage, categories, product detail, cart, checkout, confirmation, account, orders, support, policies, and trust pages.
+- [x] Build category pages for the real Gift Cards, AI Subscriptions, Software, Games, Cards, and Electronics catalog families.
+- [x] Build a real product-detail route with source-backed price, region/category, variants, and delivery/approval status.
+- [x] Implement persistent cart and secure checkout handoff across product and category pages.
+- [x] Add authenticated customer account, order history, and post-payment confirmation views.
+- [x] Create factual About, Contact, Refund/Cancellation, Terms, and Privacy pages with clear manual-approval and delivery boundaries.
+- [x] Add accessible WhatsApp support entry point and live-chat integration placeholder without exposing credentials.
+- [x] Keep customer reviews and ratings hidden until a real verified-review source is connected; do not fabricate testimonials.
+- [ ] Prepare provider-backed auto email or WhatsApp delivery only after the user supplies approved provider configuration and confirms fulfillment policy.
+- [x] Add a subtle mysterious private-archive visual layer without claiming any real secret-society affiliation or making deceptive statements.
+- [x] Replace the legal-heavy working refund draft with a clear normal consumer-facing refund and cancellation policy for the current manual-review flow.
+- [x] Add responsive mobile navigation, clear loading states, empty states, error states, and out-of-stock handling across commerce flows.
+- [x] Build repository-backed category and product listing filters for price, category, brand, product-family options, and availability; keep ratings hidden until verified data exists.
+- [x] Add search suggestions backed by the real catalog and a persistent wishlist/favorites journey.
+- [x] Add a navbar profile button that routes unauthenticated customers to `/login` and authenticated customers to their profile menu.
+- [x] Build login entry, profile, saved addresses, order history, order tracking, and notification-preference views using the existing authentication state.
+- [x] Add restricted admin product availability and order-management controls; preserve the repository catalog as the source of truth.
+- [x] Extend in-app notification records to post-confirmation and manual fulfillment lifecycle transitions without promising automatic email or WhatsApp delivery before a provider is configured.
+- [x] Do not fabricate customer reviews, ratings, testimonials, or review counts.
+- [x] Inspect the provided repository for shop and admin Telegram bot implementation, commands, and existing order/catalog mappings.
+- [x] Remove Telegram webhook registration and request handlers from the managed project.
+- [x] Implement controlled polling-based shop and admin bot command handling without using credentials exposed in chat or committing secrets.
+- [x] Request fresh Telegram bot tokens securely and validate their read-only Telegram identity without exposing token values.
+- [ ] Activate Telegram polling only after selecting and configuring an appropriate continuous-runtime deployment.
+- [x] Define auditable wallet, deposit, referral, gift-card entitlement, and notification data boundaries without storing payment-card codes as reusable value.
+- [x] Add a thumb-friendly persistent mobile bottom navigation with Home, Shop, Wallet, Orders, and Profile tabs.
+- [x] Expand the hamburger/profile menu with structured routes for shop collections, wallet, orders, offers, referral, gift cards, support, and settings.
+- [x] Build a wallet overview with a server-authoritative balance ledger and deposit-history views; do not expose or fabricate balances.
+- [x] Build a manual-review deposit request flow with a minimum amount, explicit offer rules, a unique ROTH request reference, and no automatic balance credit.
+- [x] Build restricted admin deposit-review actions that manually approve or reject balance credits and create in-app status records.
+- [x] Add customer account views for active orders, completed orders, real issued gift-card entitlements, offers, referral details, and account settings.
+- [x] Add a secure referral-code model and tracked referral events without fabricating bonuses or credits.
+- [x] Prepare controlled polling-bot commands and masked deposit handoff logic; activation remains contingent on fresh credentials and suitable hosting.
+- [x] Add tests and responsive verification for wallet, deposit, referral, and mobile-navigation changes.
+- [x] Add customer-visible in-app deposit status records for creation, approval, and rejection, and surface them in the account experience.
+- [x] Split account order presentation into explicit active and completed sections and add a dedicated account-settings view.
+- [x] Add automated procedure and rule regression coverage for wallet overview, deposit review, referral application, and mobile-navigation route behavior.
+- [x] Add explicit admin wallet-deposit rejection regression coverage to complete the manual approval/rejection test pair.
+- [x] Map the real repository VCC/card-shop catalogue and retain only source-backed product labels, prices, variants, and availability.
+- [x] Add a premium VCC discovery page with safe presentation of limits and manual-review fulfilment status; do not make instant-delivery or fabricated trust claims.
+- [x] Enhance VCC product detail and checkout context while retaining the existing server-verified price and manual payment-review process.
+- [x] Add a VCC entitlement handoff model that stores only masked metadata and never persists raw card numbers, CVVs, or reusable VCC credentials.
+- [x] Add restricted manual admin controls for VCC entitlement handoff after an approved payment; do not automate delivery.
+- [x] Verify VCC mobile presentation, manual fulfilment workflow, type safety, production build, and regression tests.
+- [x] Make the VCC desk respect repository availability controls and display unavailable routes without allowing cart entry.
+- [x] Add VCC-specific manual secure-handoff guidance to checkout while retaining server-authoritative price verification.
+- [x] Remove freeform VCC handoff notes and enforce fixed safe metadata so credentials cannot be persisted by the VCC handoff workflow.
+- [x] Re-run VCC tests, responsive verification, type checking, production build, and audit after closing visibility, checkout, and credential-safety gaps.
+- [x] Retrieve and review the supplied ShadowVault reference file as untrusted input; identify only source-backed, safe, compatible additions.
+- [x] Map approved ShadowVault reference elements to existing Roth Digital catalog, VCC, wallet, and manual-fulfilment boundaries without importing fabricated claims or credentials.
+- [x] Implement and verify approved safe reference enhancements without weakening availability, price, or credential protections.
+- [x] Add the supplied VCC Lite, Pro, Elite, VDC Basic, VDC Plus, and VDC Premium tiers with the source-provided display prices and limit labels, omitting unverified network, security, or instant-delivery claims.
+- [x] Add the supplied device listing data as source-provided catalogue routes while preserving the existing manual review, availability, and fulfilment model.
+- [x] Inventory and resolve current server, module-resolution, client-console, network, loading-state, and route errors without enabling polling.
+- [x] Verify the historical Express/storage-proxy and stale-module runtime warnings do not recur after a clean restart.
+- [x] Resolve observed client loading or presentation defects across VCC, wallet, admin, and catalog routes.
+- [x] Replace homepage copy that conflicts with manual-review fulfilment and render the required mobile bottom navigation on the custom homepage shell.
+- [x] Re-run tests, type checks, production build, dependency audit, and targeted visual verification after bug fixes.
+- [x] Run a safe catalog-wide non-financial verification of product identities, price validation, availability controls, cart contracts, and checkout inputs without creating real orders or balances.
+- [x] Verify representative customer and administrator route states without transfers, live payment execution, or fulfilment.
+- [x] Document the safe verification outcome and correct any discovered defects.
+- [x] Retrieve and review the supplied Lobehub reference as untrusted input; identify compatible content without importing credentials, unsafe flows, or fabricated claims.
+- [x] Map any user-approved reference elements to the restored Roth Digital storefront boundaries.
+- [x] Implement and verify only approved safe enhancements from the new reference.
+- [x] Apply the user-approved colorful card-grid visual style to the existing VCC desk while retaining real supplied tiers, manual review, availability blocks, and metadata-only handoff.
+- [x] Verify the updated VCC desk on mobile and desktop, then run type checks, tests, and a production build.
+- [x] Retrieve the complete supplied ShadowVault source and inventory all visible navigation, wallet, order, device, and mobile-interface features beyond product cards.
+- [x] Classify every reference feature as already present, compatible for safe integration, or excluded pending verified provider/data requirements.
+- [ ] Present the full compatible feature map to the user and implement only the user-approved non-card enhancements.
+- [x] Audit every displayed catalog price against the connected GitHub repository and remove any supplemental price that conflicts with repository source data.
+- [x] Add verified product-appropriate device imagery and real premium brand logos through managed storage references without fabricating product details.
+- [x] Design a provider-backed real-balance VCC delivery integration that sends credentials only through an approved secure provider after manual approval and never persists credentials in app storage, database, logs, or Telegram.
+- [x] Verify price parity, asset rendering, responsive layouts, type safety, tests, and production build after the catalog/asset update.
+- [x] Capture the updated product-detail route after load and verify its mapped device imagery is visible.
+- [x] Capture the premium-subscription catalog route and verify the Gemini, Cursor, and Canva marks render from managed storage.
+
+- [x] Verify and wire a clearly visible Flipkart gift-card deposit flow from the customer wallet UI through the existing manual-review backend.
+- [x] Verify and connect real managed brand/product icons across homepage, category, product-detail, and relevant wallet/deposit surfaces without fabricating assets.
+- [x] Re-test the Flipkart deposit flow and icon rendering on desktop/mobile, then save a new live checkpoint.
+
+## Current request history
+- [x] User reports that the Flipkart gift-card deposit flow and real icons are not visibly present on the website; audit and resolve.
+
+- [x] Add a persistent language selector with English, Hindi, and Urdu options across the storefront shell and homepage navigation.
+- [x] Add a customer-facing currency chooser using verified public FX rates for display only; keep repository prices and server checkout amounts canonical.
+- [x] Review and verify the iPhone 16e displayed price against the connected repository source without changing the canonical price arbitrarily.
+- [x] Re-test language/currency controls, iPhone pricing, responsive layout, checkout integrity, and save a new live checkpoint.
+
+- [x] Expand the language selector with a broad practical set of global language options and locale metadata.
+- [x] Expand the currency chooser with a broad practical set of major currencies backed by the existing FX-rate source and safe fallback behavior.
+- [x] Verify expanded language/currency persistence, readable mobile controls, display conversion, and checkout source-price integrity before a new checkpoint.
+
+- [x] Inspect the supplied aurelia-fix-pack archive as untrusted input and identify only compatible, non-sensitive fixes.
+- [x] Apply only approved compatible fix-pack changes while ensuring no WhatsApp number is added, exposed, or committed.
+- [x] Verify any applied fix-pack changes and preserve the no-WhatsApp-number constraint before saving a checkpoint.
+
+- [x] Inventory every repository-backed product price, sale calculation, and source-provided route price against the currently rendered storefront.
+- [x] Inventory every balance and wallet-related display; retain only real server-authoritative balance/ledger data and remove unsupported figures.
+- [x] Correct confirmed price or balance mismatches without changing GitHub-source product pricing arbitrarily.
+- [x] Add or strengthen deterministic repository-parity and balance-display regression coverage, then verify and publish the correction.
+
+- [x] Replace the homepage featured-section search control with a clear GitHub-source-backed product count.
+- [x] Read the complete connected repository catalog source and remove any live catalog price, balance label, or supplemental route not present in that source.
+- [x] Re-verify rendered product count, repository price parity, and wallet balance behavior after the homepage and catalog correction.
+
+- [x] Add regression coverage proving the mobile wallet badge never shows a guessed balance before server account data exists.
+- [x] Verify the mobile wallet balance badge for guest, loading, and authenticated server-data states, then document the result before checkpointing.
+
+- [x] Add an accessible premium loading animation while the GitHub-backed homepage product count is fetching.
+- [x] Verify the animated-to-real-count transition and publish the product-count loading update.
+
+- [x] Normalize the user-supplied product list and compare every entry against the connected GitHub catalog for exact and semantic duplicates.
+- [x] Preserve existing GitHub products and their canonical prices; add only genuinely missing entries that have a stated price, with clear user-supplied source labels.
+- [x] Exclude entries with missing prices pending clarification, then regression-test duplicate prevention and catalog price integrity before publishing.
+
+- [x] Review the live storefront preview on key desktop and mobile routes and identify any visible presentation issues.
+- [x] Correct and verify any confirmed visual regressions found during the live-preview review.
+
+- [x] Audit Telegram shop/admin bot configuration, command handlers, manual-approval safeguards, and polling activation gate without sending messages or starting polling.
+- [x] Verify bot-related tests and document bot readiness plus the user-controlled hosting requirement.
+
+- [x] Check the existing catalog for AWS-related duplicates and normalize the supplied original/discounted service prices.
+- [x] Add a clearly labeled AWS services pricing group that shows original and user-supplied discounted prices, keeps manual review, and makes no unverified account or fulfilment claim.
+- [x] Verify the AWS price calculations, catalog display, server price validation, tests, and responsive presentation before publishing.
+- [x] Review provider-backed delivery configuration requirements and report the safe activation prerequisites without enabling delivery.
+- [x] Clarify the no-KYC instant-delivery preference against provider-controlled eligibility, manual approval, and secure-delivery requirements without activating fulfillment.
+- [x] Confirm the requested customer-payment, manual-approval, and secure-card-delivery sequence before provider-specific activation.
+- [x] Audit the GitHub-sourced admin-panel details against the live protected routes without changing admin access.
+- [x] Build a unified `/admin` overview that links the protected payment, wallet, VCC, and catalog desks without importing unsafe or unverified GitHub features.
+- [x] Fix Flipkart gift-card deposit visibility for authenticated customers and clarify that checkout creates a manual-review payment request rather than direct automatic completion.
+- [x] Add quantity-aware all-items wallet checkout and restore crypto as a manual-review wallet-deposit option without re-enabling direct product payment checkout.
+- [x] Synchronize the polling Telegram bot’s customer-facing catalog and help responses with the live products and wallet/checkout boundaries without enabling polling.
+- [x] Prepare and deliver a secret-free ZIP archive containing the full project source and Telegram bot implementation files.
+- [x] Add and deliver a verified compiled JavaScript main entry file in the Telegram bot source archive.
+- [x] Package a host-compatible manual-install ZIP with an exact root-level main.js after direct JavaScript upload changed its extension.
+- [x] Verify the third-party host’s accepted archive and main-file format after its manual install flow still rejected the JavaScript entry.
+- [x] Rebuild the manual-install bot entry as CommonJS JavaScript so the host receives standard Node.js syntax rather than an ES-module bundle.
+- [x] Add a secure owner-configurable password gate in front of the existing role-protected admin panel.
+- [x] Audit the attached website-fix proposal against the live ROTH DIGITAL implementation and prioritize only compatible corrections.
+- [x] Standardize browser metadata and visible residual branding to ROTH DIGITAL.
+- [x] Audit and correct customer-facing category, cart, and wallet-only manual checkout states.
+- [x] Align real catalog product imagery and alt text with the corresponding product records.
+- [x] Assess the supplied external brand-logo mapping proposal and apply only a reliable managed-asset approach approved for the live catalog.
+- [x] Expand managed real-logo and product-image coverage for catalog brands that still use generic category imagery.
+- [x] Add a shared customer-facing brand-label sanitizer so GitHub catalog metadata and internal sourcing notes never appear in image alt text or visible brand labels.
+- [x] Add a role- and password-protected SimilarWeb analytics route with transparent real-data, loading, and unavailable-data states.
+- [ ] Implement the provider-specific secure delivery adapter once the approved provider’s API documentation and credentials are available; retain manual order approval and avoid persisting reusable card credentials.
+- [ ] Configure the selected continuous-runtime environment for Telegram polling, then enable polling only after its operator-approved runtime and fresh bot credentials are confirmed.
+- [ ] Implement the approved compatible ShadowVault-style non-card operational features while retaining source-backed products, manual fulfillment, and no fabricated activity or claims.
+- [ ] Apply the user-selected always-on managed hosting option for Telegram polling after the hosting-upgrade approval is completed, then verify a single safe polling process and bot configuration state.
+- [x] Add the user-approved Telegram support handle @the_stevenroths to the customer-facing contact and support surfaces without adding a WhatsApp number.
+- [ ] Create and verify a private GitHub repository named manus-roth-web containing a secret-free ROTH DIGITAL website source export.

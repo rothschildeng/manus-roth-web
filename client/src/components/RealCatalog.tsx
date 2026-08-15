@@ -1,0 +1,58 @@
+import { useAuth } from "@/_core/hooks/useAuth";
+import { trpc } from "@/lib/trpc";
+import { brandAlt, cleanBrand } from "@/lib/sanitize";
+import { useStorePreferences } from "@/contexts/StorePreferencesContext";
+import { ArrowUpRight, Heart, Search, ShoppingBag, SlidersHorizontal, Sparkles } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Link } from "wouter";
+
+export type CheckoutCatalogItem = { itemId: string; name: string; type: string; detail: string; price: string; };
+
+const cleanLabel = (value: string) => cleanBrand(value).replace(/^[^A-Za-z0-9]+/, "");
+const categoryImages: Record<string, string> = { indian_giftcard: "/manus-storage/gc-menu_339ac9b0.jpg", intl_giftcard: "/manus-storage/gc-menu_339ac9b0.jpg", binance_card: "/manus-storage/vcc-menu_8fb640d0.jpg", game_topup: "/manus-storage/freefire_f9b5fd3f.jpg", streaming: "/manus-storage/premium-menu_2a88a89e.jpg", premium_sub: "/manus-storage/premium-menu_2a88a89e.jpg", vcc: "/manus-storage/vcc-menu_8fb640d0.jpg", card_shop: "/manus-storage/vcc-menu_8fb640d0.jpg", cloud_services: "/manus-storage/premium-menu_2a88a89e.jpg", electronics: "/manus-storage/elec-menu_b744e046.jpg" };
+const brandImages: Array<[string, string]> = [["aws", "/manus-storage/roth-aws-brand_9ddb5827.png"], ["myntra", "/manus-storage/roth-myntra-brand_8d1c4b36.png"], ["ajio", "/manus-storage/roth-ajio-brand_84ac5ad7.png"], ["amazon", "/manus-storage/amazon_3eae347f.jpg"], ["apple", "/manus-storage/apple_9171b857.jpg"], ["flipkart", "/manus-storage/flipkart_a0519cde.jpg"], ["chatgpt", "/manus-storage/chatgpt_50484410.jpg"], ["openai", "/manus-storage/chatgpt_50484410.jpg"], ["claude", "/manus-storage/claude_c627a59f.jpg"], ["gemini", "/manus-storage/roth-gemini-logo_2b4b8b78.png"], ["cursor", "/manus-storage/roth-cursor-logo_a04747bd.png"], ["canva", "/manus-storage/roth-canva-logo_2dcfe4fd.png"], ["free fire", "/manus-storage/freefire_f9b5fd3f.jpg"], ["google play", "/manus-storage/googleplay_a7405d3a.jpg"], ["netflix", "/manus-storage/netflix_290db0bc.jpg"], ["pubg", "/manus-storage/pubg_36ef0361.jpg"], ["roblox", "/manus-storage/roblox_bae4d760.jpg"], ["spotify", "/manus-storage/spotify_2a239ba7.jpg"], ["steam", "/manus-storage/steam_4cc9daa0.jpg"], ["swiggy", "/manus-storage/swiggy_d25b372b.jpg"], ["zomato", "/manus-storage/zomato_7c0c31b6.jpg"]];
+const deviceImages: Array<[string, string]> = [["iphone 15 pro", "/manus-storage/roth-iphone-15-pro_8c149dff.jpg"], ["macbook air m3", "/manus-storage/roth-macbook-air-m3_ef524aae.jpg"], ["galaxy s24 ultra", "/manus-storage/roth-galaxy-s24-ultra_f4c01638.jpg"], ["iphone 16 pro max", "/manus-storage/roth-iphone-16-pro-max_bcb7e202.jpg"], ["iphone 16e", "/manus-storage/roth-iphone-16e_9b5309b8.jpg"]];
+export const imageForProduct = (group: string, category: string, label = "") => {
+  const identity = `${group} ${label}`.toLowerCase();
+  return deviceImages.find(([needle]) => identity.includes(needle))?.[1] ?? brandImages.find(([needle]) => identity.includes(needle))?.[1] ?? categoryImages[category];
+};
+export const imageAltForProduct = (group: string, category: string, label = "") => {
+  void category;
+  void label;
+  return brandAlt(group);
+};
+const numericPrice = (value: string) => Number(value.replace(/[^0-9.]/g, "")) || 0;
+const currency = (value: string) => value.includes("₹") ? "INR" : value.includes("£") ? "GBP" : value.includes("Rp") ? "IDR" : value.includes("$") ? "USD" : "Other";
+
+export default function RealCatalog({ onCheckout }: { onCheckout: (item: CheckoutCatalogItem) => void }) {
+  const { isAuthenticated } = useAuth();
+  const { formatPrice } = useStorePreferences();
+  const { data, isLoading, error } = trpc.catalog.list.useQuery();
+  const favorites = trpc.favorites.list.useQuery(undefined, { enabled: isAuthenticated });
+  const toggleFavorite = trpc.favorites.toggle.useMutation({ onSuccess: () => favorites.refetch() });
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("all");
+  const [brand, setBrand] = useState("all");
+  const [priceBand, setPriceBand] = useState("all");
+  const [variantOnly, setVariantOnly] = useState("all");
+  const [availability, setAvailability] = useState<"available" | "all">("available");
+  const normalized = query.trim().toLowerCase();
+  const categories = (data?.categories ?? {}) as Record<string, string>;
+  const brands = useMemo(() => Array.from(new Set((data?.products ?? []).map((product) => cleanLabel(product.group).split(" ")[0]).filter(Boolean))).sort().slice(0, 20), [data?.products]);
+  const suggestions = useMemo(() => normalized.length < 2 ? [] : (data?.products ?? []).filter((product) => `${product.group} ${product.label}`.toLowerCase().includes(normalized)).slice(0, 5), [data?.products, normalized]);
+  const products = useMemo(() => (data?.products ?? []).filter((product) => {
+    const itemId = `${product.group} — ${product.label}`;
+    const unavailable = Boolean(data?.availability?.[itemId]);
+    const matchesCategory = category === "all" || product.category === category;
+    const matchesBrand = brand === "all" || cleanLabel(product.group).toLowerCase().startsWith(brand.toLowerCase());
+    const haystack = `${product.group} ${product.label} ${product.pay} ${product.get ?? ""}`.toLowerCase();
+    const amount = numericPrice(product.pay);
+    const matchesPrice = priceBand === "all" || (priceBand === "entry" && amount <= 10) || (priceBand === "mid" && amount > 10 && amount <= 50) || (priceBand === "premium" && amount > 50);
+    const matchesVariants = variantOnly === "all" || (variantOnly === "has_variants" && Boolean(product.colors?.length));
+    return matchesCategory && matchesBrand && matchesPrice && matchesVariants && (availability === "all" || !unavailable) && (!normalized || haystack.includes(normalized));
+  }), [availability, brand, category, data?.availability, data?.products, normalized, priceBand, variantOnly]);
+  const favoriteIds = new Set(favorites.data ?? []);
+  if (isLoading) return <div className="real-catalog-loading">Loading the verified ROTH DIGITAL catalog…</div>;
+  if (error || !data) return <div className="real-catalog-loading">Catalog is temporarily unavailable. Refresh the page to retry.</div>;
+  return <section className="real-catalog" aria-label="Full ROTH DIGITAL catalog"><div className="real-catalog-head"><div><span className="catalog-kicker">REPOSITORY CATALOG / {data.products.length} LIVE ITEMS</span><h3>Every route.<br /><em>One desk.</em></h3></div><p>Exact products, displayed prices, and variants are imported from the ROTH DIGITAL product source. Ratings are intentionally unavailable until a verified review source is connected.</p></div><div className="real-catalog-tools"><div className="catalog-search-wrap"><label className="real-search"><Search size={15} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search brands, products, passes" /></label>{suggestions.length > 0 && <div className="catalog-suggestions">{suggestions.map((product) => { const itemId = `${product.group} — ${product.label}`; return <Link key={itemId} href={`/product/${encodeURIComponent(itemId)}`} onClick={() => setQuery("")}><span>{cleanLabel(product.group)}</span><b>{product.label}</b><em>{formatPrice(product.pay)}</em></Link>; })}</div>}</div><div className="real-category-pills"><button className={category === "all" ? "active" : ""} onClick={() => setCategory("all")}>All</button>{Object.entries(categories).map(([key, label]) => <button key={key} className={category === key ? "active" : ""} onClick={() => setCategory(key)}>{cleanLabel(label)}</button>)}</div></div><div className="catalog-filter-bar"><span><SlidersHorizontal size={14} /> Refine collection</span><select value={brand} onChange={(event) => setBrand(event.target.value)}><option value="all">All brands</option>{brands.map((value) => <option key={value} value={value}>{value}</option>)}</select><select value={priceBand} onChange={(event) => setPriceBand(event.target.value)}><option value="all">All displayed prices</option><option value="entry">Entry (≤ 10)</option><option value="mid">Mid (10–50)</option><option value="premium">Premium (&gt; 50)</option></select><select value={variantOnly} onChange={(event) => setVariantOnly(event.target.value)}><option value="all">All sizes / variants</option><option value="has_variants">Has size / variants</option></select><select value={availability} onChange={(event) => setAvailability(event.target.value as typeof availability)}><option value="available">Available now</option><option value="all">Include out of stock</option></select><small>Price bands use each item’s original displayed currency.</small></div><p className="real-catalog-count">{products.length} items matching your view <span>·</span> <Sparkles size={12} /> verified-source catalog</p><div className="real-products-grid">{products.map((product) => { const itemId = `${product.group} — ${product.label}`; const image = imageForProduct(product.group, product.category, product.label); const unavailable = Boolean(data.availability?.[itemId]); const quoteOnly = Boolean(product.quoteOnly); const isFavorite = favoriteIds.has(itemId); return <article className={`real-product-card ${unavailable ? "is-unavailable" : ""}`} key={itemId}><div className="real-product-top">{image ? <img className="real-product-image" src={image} alt={brandAlt(product.group)} /> : null}<span className="real-product-group">{cleanBrand(product.group)}</span>{unavailable ? <span className="real-stock">Out of stock</span> : quoteOnly ? <span className="real-stock">Manual quote</span> : product.origPay ? <span className="real-sale">Source sale</span> : null}{isAuthenticated ? <button className={`favorite-button ${isFavorite ? "is-active" : ""}`} onClick={() => toggleFavorite.mutate({ productId: itemId })} disabled={toggleFavorite.isPending} aria-label={isFavorite ? "Remove from wishlist" : "Add to wishlist"}><Heart size={14} fill={isFavorite ? "currentColor" : "none"} /></button> : <Link className="favorite-button" href="/login" aria-label="Sign in to save favorite"><Heart size={14} /></Link>}</div><h4>{product.label}</h4>{product.get && <p className="real-product-get">{product.get}</p>}{product.quoteOnly ? <p className="real-product-colors">Manual review and custom quote required before checkout</p> : product.colors?.length ? <p className="real-product-colors">Variants: {product.colors.join(" · ")}</p> : <p className="real-product-colors">Region and delivery route shown at checkout</p>}<div className="real-product-footer"><div><strong>{formatPrice(product.pay)}</strong>{product.origPay ? <s>{formatPrice(product.origPay)}</s> : null}<small>{quoteOnly ? "Manual quote" : currency(product.pay)}</small></div><div className="card-actions"><Link href={`/product/${encodeURIComponent(itemId)}`} aria-label={`View ${cleanLabel(product.group)}`}><Search size={14} /></Link>{quoteOnly ? <Link href="/support" aria-label={`Request a manual quote for ${product.label}`}><ArrowUpRight size={15} /></Link> : <button onClick={() => onCheckout({ itemId, name: cleanLabel(product.group), type: cleanLabel(categories[product.category] ?? product.category), detail: product.label, price: product.pay })} disabled={unavailable} aria-label={`Choose ${cleanLabel(product.group)} ${product.label}`}><ShoppingBag size={15} /></button>}</div></div></article>; })}</div>{products.length === 0 && <div className="real-catalog-loading">No available route matches those filters. Clear a filter or include out-of-stock items to browse the full source catalog.</div>}</section>;
+}

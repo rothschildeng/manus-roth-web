@@ -1,0 +1,1 @@
+ALTER TABLE `paymentOrders` MODIFY COLUMN `status` enum('awaiting_payment','detected','confirming','pending_admin','approved','fulfillment_ready','delivered','rejected','expired') NOT NULL DEFAULT 'awaiting_payment';
