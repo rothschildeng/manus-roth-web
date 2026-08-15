@@ -187,3 +187,4 @@
 - [ ] Apply the user-selected always-on managed hosting option for Telegram polling after the hosting-upgrade approval is completed, then verify a single safe polling process and bot configuration state.
 - [x] Add the user-approved Telegram support handle @the_stevenroths to the customer-facing contact and support surfaces without adding a WhatsApp number.
 - [x] Create and verify a private GitHub repository named manus-roth-web containing a secret-free ROTH DIGITAL website source export.
+- [x] Document the polling-only Telegram bot configuration, webhook boundary, and customer support handle @the_stevenroths in the exported repository README without including secret values.
