@@ -21,20 +21,23 @@ import {
 } from "@/components/ui/sidebar";
 import { startLogin } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { CreditCard, LayoutDashboard, LogOut, PackageSearch, PanelLeft, WalletCards } from "lucide-react";
+import { ChartNoAxesCombined, CreditCard, LayoutDashboard, LockKeyhole, LogOut, PackageSearch, PanelLeft, Store, WalletCards, type LucideIcon } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
-const menuItems = [
-  { icon: LayoutDashboard, label: "Storefront", path: "/" },
-  { icon: LayoutDashboard, label: "Admin overview", path: "/admin" },
-  { icon: CreditCard, label: "Payment review", path: "/admin/payments" },
-  { icon: WalletCards, label: "Wallet reviews", path: "/admin/wallet" },
-  { icon: CreditCard, label: "VCC handoffs", path: "/admin/vcc" },
-  { icon: PackageSearch, label: "Catalog controls", path: "/admin/catalog" },
-];
+type AdminMenuItem = { icon: LucideIcon; label: string; path: string };
+type AdminMenuGroup = { label: string; items: AdminMenuItem[] };
+
+const menuGroups: AdminMenuGroup[] = [
+  { label: "Workspace", items: [{ icon: Store, label: "Storefront", path: "/" }, { icon: LayoutDashboard, label: "Admin overview", path: "/admin" }] },
+  { label: "Overview", items: [{ icon: ChartNoAxesCombined, label: "SimilarWeb analytics", path: "/similarweb-analytics" }] },
+  { label: "Manual review", items: [{ icon: CreditCard, label: "Payment review", path: "/admin/payments" }, { icon: WalletCards, label: "Wallet reviews", path: "/admin/wallet" }] },
+  { label: "Store control", items: [{ icon: LockKeyhole, label: "VCC handoffs", path: "/admin/vcc" }, { icon: PackageSearch, label: "Catalog controls", path: "/admin/catalog" }] },
+] ;
+
+const menuItems: AdminMenuItem[] = menuGroups.flatMap((group) => group.items);
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
 const DEFAULT_WIDTH = 280;
@@ -181,26 +184,10 @@ function DashboardLayoutContent({
           </SidebarHeader>
 
           <SidebarContent className="gap-0">
-            <SidebarMenu className="px-2 py-1">
-              {menuItems.map(item => {
-                const isActive = location === item.path;
-                return (
-                  <SidebarMenuItem key={item.path}>
-                    <SidebarMenuButton
-                      isActive={isActive}
-                      onClick={() => setLocation(item.path)}
-                      tooltip={item.label}
-                      className={`h-10 transition-all font-normal`}
-                    >
-                      <item.icon
-                        className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
-                      />
-                      <span>{item.label}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
-            </SidebarMenu>
+            {menuGroups.map((group) => <div key={group.label} className="px-2 py-2 first:pt-1"><p className="px-2 pb-1 pt-1 text-[9px] font-semibold uppercase tracking-[.15em] text-muted-foreground group-data-[collapsible=icon]:hidden">{group.label}</p><SidebarMenu>{group.items.map(item => {
+              const isActive = location === item.path;
+              return <SidebarMenuItem key={item.path}><SidebarMenuButton isActive={isActive} onClick={() => setLocation(item.path)} tooltip={item.label} className="h-10 transition-all font-normal"><item.icon className={`h-4 w-4 ${isActive ? "text-primary" : ""}`} /><span>{item.label}</span></SidebarMenuButton></SidebarMenuItem>;
+            })}</SidebarMenu></div>)}
           </SidebarContent>
 
           <SidebarFooter className="p-3">

@@ -23,7 +23,7 @@ describe("mobile navigation targets", () => {
   it("keeps the custom homepage aligned with the mobile navigation and manual-review fulfilment policy", () => {
     const home = readFileSync(resolve(process.cwd(), "client/src/pages/Home.tsx"), "utf8");
     expect(home).toContain("<MobileBottomNav />");
-    expect(home).toContain("Manual review after confirmation");
+    expect(home).toContain("SHOP DIGITAL ESSENTIALS WITH CLEAR ORDER STATUS");
     expect(home).not.toContain("Instant delivery is on");
   });
 });

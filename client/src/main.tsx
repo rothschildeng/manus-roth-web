@@ -8,6 +8,7 @@ import App from "./App";
 import { StorePreferencesProvider } from "@/contexts/StorePreferencesContext";
 import { startLogin } from "./const";
 import "./index.css";
+import "./mobile-repair.css";
 
 const queryClient = new QueryClient();
 
